@@ -1,8 +1,27 @@
-import React from 'react';
-import { View, KeyboardAvoidingView, Platform, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, AsyncStorage, KeyboardAvoidingView, Platform, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
+import api from '../services/api';
+export default function Login( { navigation } ) {
 
-export default function Login() {
+    const [ email, setEmail] = useState('');
+    const [ techs, setTechs] = useState('');
+
+    async function handleSubmit(){
+        const response = await api.post('/sessions',{
+            email
+        })
+        
+        const { _id } = response.data;
+        
+        //console.log('email: ',email,' - ','techs: ',techs,'_id: ', _id);
+
+        await AsyncStorage.setItem('user', _id);
+        await AsyncStorage.setItem('techs', techs);
+
+        navigation.navigate('List')
+    }
+
     return (
         <KeyboardAvoidingView enabled={Platform.OS === 'ios'} style={styles.container}>
             <Image source={logo} />
@@ -17,6 +36,9 @@ export default function Login() {
                     keyboardType="email-address"
                     autoCaptalize="none"
                     autoCorrect={false}
+                    value={email}
+                    onChangeText={setEmail}
+
                 />
 
                 <Text style={styles.label}>TECNOLOGIAS *</Text>
@@ -27,9 +49,11 @@ export default function Login() {
                     autoCaptalize="words"
                     autoCorrect={false}
                     placeholderTextColor="#999"
+                    value={techs}
+                    onChangeText={setTechs}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                     <Text style={styles.bottonText}>Encontrar Spots</Text>
                 </TouchableOpacity>
             </View>
@@ -63,7 +87,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#444',
         height: 44,
-        marginBottom: 2,
+        marginBottom: 20,
         borderRadius:2
     },
 
@@ -73,12 +97,10 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         borderRadius: 2,
-        color: '#fff',
-
     },
 
-    buttonText: {
-        color: '#fff',
+    bottonText: {
+        color: '#fffFFF',
         fontWeight: 'bold',
         fontSize: 16,
     }
