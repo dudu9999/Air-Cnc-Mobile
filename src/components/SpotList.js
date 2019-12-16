@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from 'react';
-
+import { withNavigation } from 'react-navigation';
 import {View, Text, Image, TouchableOpacity, AsyncStorage,FlatList, StyleSheet} from 'react-native';
 import api from '../services/api';
 
-export default function SpotList({tech}) {
+function SpotList({tech}) {
 
     const [sopts, setSpots] = useState([])
 
@@ -18,13 +18,12 @@ export default function SpotList({tech}) {
         loadSpots();
     }, []);
 
+    function handleNavigate(){
+        navigation.navigate('Book');
+    }
+
     return <View style={styles.container}> 
-        <Text style={styles.title}>
-            Empresas que usam 
-            <Text style={styles.bold}>
-                {tech}
-            </Text>
-        </Text>
+        <Text style={styles.title}>Empresas que usam <Text style={styles.bold}>{tech}</Text></Text>
 
         <FlatList 
             style={styles.list}
@@ -34,7 +33,7 @@ export default function SpotList({tech}) {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
                 <View style={styles.listItem}>
-                    <Image style={styles.thumbnail} source={{uri: item.thumbnail_url}}></Image>
+                    <Image style={styles.thumbnail} source={{uri: item.thumbnail_url}} />
                     <Text style={styles.company}>{item.company}</Text>
                     <Text style={styles.price}>{item.price ? `R$${item.price}/dia` : `GRATUITO`}</Text>
 
@@ -59,16 +58,33 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginBottom: 15,
     },
-
-    bold:{ fontWeight:'bold' },
-    list:{paddingHorizontal: 20},
-    listItem:{},
+    bold:{ 
+        fontWeight:'bold', 
+    },
+    list:{
+        paddingHorizontal: 20,
+    },    
+    listItem:{ 
+        marginRight: 15,
+    },    
     thumbnail:{
         width: 200,
         height:120,
         resizeMode: 'cover',
-        borderRadius: 2
+        borderRadius: 2,
     },
+    company:{
+        fontSize: 24,
+        fontWeight:'bold',
+        color:'#333',
+        marginTop:10,
+    },
+    price:{
+        fontSize: 15,
+        color: '#999',
+        marginTop: 5,
+    },
+
     button: {
         height: 32,
         backgroundColor:'#f05a5b',
@@ -81,18 +97,9 @@ const styles = StyleSheet.create({
     bottonText: {
         color: '#fffFFF',
         fontWeight: 'bold',
-        fontSize: 16,
-    },
-    company:{
-        fontSize: 24,
-        fontWeight:'bold',
-        color:'#333',
-        marginTop:10,
-    },
-    price:{
         fontSize: 15,
-        color:'#999',
-        marginTop:5,
     },
     
 });
+
+export default withNavigation(SpotList);

@@ -22,7 +22,7 @@ export default function List() {
     </SafeAreaView>)
 }
 
-
+////////////  Parei aqui 1:21:00 /////////
 
 const styles = StyleSheet.create({
     container: {
