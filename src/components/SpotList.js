@@ -3,7 +3,7 @@ import { withNavigation } from 'react-navigation';
 import {View, Text, Image, TouchableOpacity, AsyncStorage,FlatList, StyleSheet} from 'react-native';
 import api from '../services/api';
 
-function SpotList({tech}) {
+function SpotList({tech, navigation}) {
 
     const [sopts, setSpots] = useState([])
 
@@ -18,8 +18,8 @@ function SpotList({tech}) {
         loadSpots();
     }, []);
 
-    function handleNavigate(){
-        navigation.navigate('Book');
+    function handleNavigate(id){
+        navigation.navigate('Book',{ id});
     }
 
     return <View style={styles.container}> 
@@ -37,7 +37,7 @@ function SpotList({tech}) {
                     <Text style={styles.company}>{item.company}</Text>
                     <Text style={styles.price}>{item.price ? `R$${item.price}/dia` : `GRATUITO`}</Text>
 
-                    <TouchableOpacity onPress={() => {}} style={styles.button}>
+                    <TouchableOpacity onPress={() => handleNavigate(item._id)} style={styles.button}>
                         <Text style={styles.bottonText}>Solicitar Reserva</Text>
                     </TouchableOpacity>
                 </View>

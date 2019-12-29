@@ -13,16 +13,16 @@ export default function List() {
         })
     })
 
-    return (<SafeAreaView style={styles.container}>
-
-        <Image style={styles.logo} source={logo} />
-        <ScrollView>
-            {techs.map(tech => <SpotList key={tech} tech={tech}/> )}
-        </ScrollView>
-    </SafeAreaView>)
+    return (
+        <SafeAreaView style={styles.container}>
+            <Image style={styles.logo} source={logo} />
+        
+            <ScrollView>
+                {techs.map(tech => <SpotList key={tech} tech={tech}/> )}
+            </ScrollView>
+       </SafeAreaView>
+    )
 }
-
-////////////  Parei aqui 1:21:00 /////////
 
 const styles = StyleSheet.create({
     container: {
