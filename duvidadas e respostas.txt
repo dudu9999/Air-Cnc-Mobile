@@ -1,0 +1,5 @@
+
+onChangeText == onChange
+onChangeText={setTechs} == pega o valor texto que vem do input e ja coloca co a função setTechs();
+
+onPress={} == onClick()

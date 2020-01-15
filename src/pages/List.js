@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import {SafeAreaView, ScrollView, Image, AsyncStorage, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Image, AsyncStorage} from 'react-native';
 import logo from '../assets/logo.png';
 import SpotList from '../components/SpotList';
 export default function List() {
@@ -37,3 +37,4 @@ const styles = StyleSheet.create({
         marginTop: 10,
     }
 });
+// resizeMode: "contain", Sem essa tag ele corta a imagem
