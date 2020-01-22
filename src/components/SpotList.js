@@ -1,18 +1,18 @@
 import React, { useState, useEffect} from 'react';
-import { withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation'; //Add a propriedade de naver a um componente que nao seja pagina
 import {View, Text, Image, TouchableOpacity, AsyncStorage,FlatList, StyleSheet} from 'react-native';
 import api from '../services/api';
 
 function SpotList({tech, navigation}) {
 
-    const [sopts, setSpots] = useState([])
+    const [spots, setSpots] = useState([]);
 
     useEffect(() => {
         async function loadSpots(){
             const response = await api.get('/spots',{
                 params: {tech}
             })
-            console.log(response.data);
+            //console.log(response.data);
             setSpots(response.data);
         }
         loadSpots();
@@ -27,13 +27,14 @@ function SpotList({tech, navigation}) {
 
         <FlatList 
             style={styles.list}
-            data={sopts}
+            data={spots}
             keyExtractor={spot => spot._id}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
                 <View style={styles.listItem}>
                     <Image style={styles.thumbnail} source={{uri: item.thumbnail_url}} />
+                    <Text style={styles.company}>{item.thumbnail_url}</Text>
                     <Text style={styles.company}>{item.company}</Text>
                     <Text style={styles.price}>{item.price ? `R$${item.price}/dia` : `GRATUITO`}</Text>
 
@@ -43,6 +44,8 @@ function SpotList({tech, navigation}) {
                 </View>
             )}
         />
+        
+
     
     </View>
 }

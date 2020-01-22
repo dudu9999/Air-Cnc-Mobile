@@ -46,7 +46,6 @@ export default function Login( { navigation } ) {
                     autoCorrect={false}
                     value={email}
                     onChangeText={setEmail}
-
                 />
 
                 <Text style={styles.label}>TECNOLOGIAS *</Text>
